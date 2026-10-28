@@ -1,1 +1,1385 @@
-x
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UK Gov Security Architect – Interview Master & Flashcards</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            gov: {
+              blue: '#1d70b8',
+              dark: '#0b0c0c',
+              grey: '#505a5f',
+              light: '#f3f2f1',
+              accent: '#005ea5',
+              success: '#00703c',
+              warning: '#f47738',
+              border: '#bfc1c3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 3D Flip Card Effect */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.4);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Top Navigation & Branding -->
+    <header class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-4">
+        <div class="h-12 w-12 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 flex items-center justify-center text-2xl shadow-lg shadow-blue-500/20">
+          🇬🇧
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+              UK Gov Security Architect <span class="text-blue-400">Prep</span>
+            </h1>
+            <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+              SC Cleared 🛡️
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+            AWS Cloud • Network Assurance • SIRO Governance • SFIA 3 &amp; 5
+          </p>
+        </div>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <nav class="flex items-center bg-slate-950/80 p-1.5 rounded-xl border border-slate-800 text-xs sm:text-sm font-medium w-full md:w-auto justify-center">
+        <button id="tab-flashcards" onclick="setMode('flashcards')" class="px-4 py-2 rounded-lg transition-all flex items-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-600/30">
+          <span>🃏</span> Flashcards
+        </button>
+        <button id="tab-revision" onclick="setMode('revision')" class="px-4 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center gap-2">
+          <span>📑</span> Revision Sheet
+        </button>
+        <button id="tab-simulator" onclick="setMode('simulator')" class="px-4 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center gap-2">
+          <span>⏱️</span> Mock Simulator
+        </button>
+      </nav>
+    </header>
+
+    <!-- Global Metrics & Quick Stats -->
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 font-medium">Total Questions</p>
+          <p id="stat-total" class="text-xl font-bold text-white mt-0.5">26</p>
+        </div>
+        <span class="text-2xl bg-slate-800/60 p-2 rounded-lg">📚</span>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 font-medium">Mastered (Known)</p>
+          <p id="stat-known" class="text-xl font-bold text-emerald-400 mt-0.5">0</p>
+        </div>
+        <span class="text-2xl bg-emerald-950/40 border border-emerald-800/40 p-2 rounded-lg">✅</span>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 font-medium">Needs Review</p>
+          <p id="stat-review" class="text-xl font-bold text-amber-400 mt-0.5">0</p>
+        </div>
+        <span class="text-2xl bg-amber-950/40 border border-amber-800/40 p-2 rounded-lg">🔄</span>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 font-medium">Target Level</p>
+          <div class="flex gap-1.5 mt-1">
+            <span class="text-xs px-2 py-0.5 rounded font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">SFIA 3</span>
+            <span class="text-xs px-2 py-0.5 rounded font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">SFIA 5</span>
+          </div>
+        </div>
+        <span class="text-2xl bg-indigo-950/40 border border-indigo-800/40 p-2 rounded-lg">🎖️</span>
+      </div>
+    </section>
+
+    <!-- Filters & Search Bar -->
+    <section class="bg-slate-900/70 border border-slate-800 rounded-xl p-4 space-y-3">
+      <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div class="relative flex-1">
+          <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400 text-sm">🔍</span>
+          <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search keywords (e.g. GuardDuty, SIRO, IRAR, WSO2, ITHC, Entrust, mTLS)..." 
+                 class="w-full bg-slate-950 border border-slate-700/80 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="shuffleCards()" title="Shuffle Deck" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+            <span>🔀</span> Shuffle
+          </button>
+          <button onclick="resetProgress()" title="Reset study progress" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+            <span>♻️</span> Reset Progress
+          </button>
+        </div>
+      </div>
+
+      <!-- Categories Pills -->
+      <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-800/60" id="category-pills">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 1: FLASHCARDS ==================== -->
+    <main id="view-flashcards" class="space-y-4">
+      
+      <!-- Progress Bar & Indicator -->
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Card Progress</span>
+          <span id="card-counter" class="text-sm font-mono font-semibold text-blue-400 bg-blue-950/60 border border-blue-800/50 px-2.5 py-0.5 rounded-full">
+            1 / 26
+          </span>
+        </div>
+        <div class="w-full sm:w-1/2 bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+          <div id="deck-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+        <div class="text-xs text-slate-400 hidden sm:block">
+          Shortcut: <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Space</kbd> Flip | <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">→</kbd> Nav
+        </div>
+      </div>
+
+      <!-- Flip Card Scene -->
+      <div class="w-full min-h-[460px] perspective-1000 cursor-pointer select-none" onclick="flipCard()">
+        <div id="card-inner" class="relative w-full min-h-[460px] rounded-2xl transform-style-3d transition-transform duration-500 shadow-2xl">
+          
+          <!-- FRONT FACE -->
+          <div id="card-front" class="absolute inset-0 w-full h-full backface-hidden bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-slate-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span id="cf-category" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30">
+                  🏛️ UK Gov Assurance
+                </span>
+                <div class="flex items-center gap-2">
+                  <span id="cf-level" class="text-xs px-2.5 py-1 rounded-full font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                    SFIA 5
+                  </span>
+                  <span id="cf-status-badge" class="text-sm"></span>
+                </div>
+              </div>
+              <div class="pt-4">
+                <span class="text-xs font-mono uppercase text-slate-500 tracking-wider">Interview Question / Scenario</span>
+                <h2 id="cf-title" class="text-xl sm:text-2xl font-bold text-white mt-1 leading-snug">
+                  What is a Senior Information Risk Owner (SIRO), and how do you present AWS architectural risks to them?
+                </h2>
+              </div>
+            </div>
+
+            <div class="space-y-3 pt-6 border-t border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400">💡 Hint:</span>
+                <p id="cf-hint" class="text-xs text-slate-300 italic">Think business liability, risk appetite, executive governance, and translation from CVEs to operational impact.</p>
+              </div>
+              <div class="flex items-center justify-between text-xs text-slate-500">
+                <span>Click card or hit <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Space</kbd> to see model answer</span>
+                <span class="text-blue-400 font-semibold flex items-center gap-1">Flip Card ↻</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK FACE -->
+          <div id="card-back" class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-blue-700/60 rounded-2xl p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span id="cb-category" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30">
+                  🏛️ UK Gov Assurance
+                </span>
+                <span class="text-xs font-mono uppercase text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-700/50 px-2.5 py-0.5 rounded-full">
+                  Model Architect Answer 🛡️
+                </span>
+              </div>
+              
+              <div id="cb-answer" class="text-slate-200 text-sm sm:text-base leading-relaxed space-y-3">
+                <!-- Answer dynamically inserted here -->
+              </div>
+
+              <!-- Tags / Buzzwords -->
+              <div class="pt-2">
+                <p class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1.5">🔑 Essential Buzzwords &amp; Frameworks:</p>
+                <div id="cb-tags" class="flex flex-wrap gap-1.5">
+                  <!-- Tags injected by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+              <span>Click to flip back to question</span>
+              <span class="text-indigo-400 font-medium">Turn Back ↺</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action & Navigation Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button onclick="prevCard()" class="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl font-medium text-sm flex items-center justify-center gap-1.5 transition">
+            <span>←</span> Previous
+          </button>
+          <button onclick="nextCard()" class="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl font-medium text-sm flex items-center justify-center gap-1.5 transition">
+            Next <span>→</span>
+          </button>
+        </div>
+
+        <!-- Mastery Feedback -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button onclick="markCard(false, event)" class="flex-1 sm:flex-initial px-4 py-2.5 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-800/60 text-amber-300 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-1.5 transition">
+            <span>🔄</span> Need Review
+          </button>
+          <button onclick="markCard(true, event)" class="flex-1 sm:flex-initial px-5 py-2.5 bg-emerald-950/50 hover:bg-emerald-900/70 border border-emerald-700 text-emerald-300 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/40 transition">
+            <span>✅</span> Mastered
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ==================== VIEW 2: REVISION SHEET ==================== -->
+    <main id="view-revision" class="hidden space-y-4">
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>📑</span> Comprehensive Revision Sheet
+          </h2>
+          <p class="text-xs text-slate-400">All questions and detailed answers ready for quick scanning before your interview panel.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="expandAll(true)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">
+            Expand All ▾
+          </button>
+          <button onclick="expandAll(false)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">
+            Collapse All ▴
+          </button>
+        </div>
+      </div>
+
+      <div id="revision-list" class="space-y-3">
+        <!-- Rendered by JS -->
+      </div>
+    </main>
+
+    <!-- ==================== VIEW 3: MOCK SIMULATOR ==================== -->
+    <main id="view-simulator" class="hidden space-y-4">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-900/50 rounded-2xl p-6 shadow-xl">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">⏱️</span>
+              <h2 class="text-xl font-bold text-white">Interactive Panel Simulator</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">
+              Simulates a formal UK Central Government interview board question (e.g. Lead Architect, SIRO rep, Security Assurance).
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-center">
+              <span class="text-xs text-slate-500 uppercase block font-mono">Timer</span>
+              <span id="sim-timer" class="text-2xl font-mono font-bold text-amber-400">03:00</span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <button id="sim-timer-btn" onclick="toggleSimTimer()" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold">
+                Start Timer
+              </button>
+              <button onclick="resetSimTimer()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-slate-800/80">
+          <button onclick="generateRandomMockQuestion()" class="w-full sm:w-auto px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30">
+            <span>🎲</span> Draw Random Panel Question
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulator Output Card -->
+      <div id="sim-output" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div class="flex items-center gap-2">
+            <span id="sim-category" class="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 font-semibold">
+              🏛️ UK Gov Assurance &amp; Governance
+            </span>
+            <span id="sim-level" class="text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+              SFIA 5
+            </span>
+          </div>
+          <span class="text-xs text-slate-500">Board Question #<span id="sim-index">1</span></span>
+        </div>
+
+        <div>
+          <span class="text-xs font-mono uppercase text-indigo-400 tracking-wider">Interviewer Inquiry</span>
+          <h3 id="sim-title" class="text-xl sm:text-2xl font-bold text-white mt-1 leading-snug">
+            Click "Draw Random Panel Question" above to start your mock interview practice session!
+          </h3>
+        </div>
+
+        <!-- Collapsible Model Answer & Marking Scheme -->
+        <div class="space-y-3">
+          <button onclick="toggleSimAnswer()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center gap-2 transition">
+            <span id="sim-answer-icon">👁️</span> <span id="sim-answer-text">Reveal Model Answer &amp; Key Evaluation Points</span>
+          </button>
+
+          <div id="sim-answer-box" class="hidden bg-slate-950/80 border border-slate-800/90 rounded-xl p-5 space-y-4">
+            <h4 class="text-xs font-mono uppercase text-emerald-400 font-semibold tracking-wider">Scoring Points &amp; Benchmark Response</h4>
+            <div id="sim-answer-content" class="text-slate-300 text-sm leading-relaxed space-y-2">
+              <!-- Content inserted by JS -->
+            </div>
+            <div>
+              <p class="text-xs font-mono text-slate-500 uppercase tracking-wider mb-1">Look for these key terms in your speech:</p>
+              <div id="sim-tags" class="flex flex-wrap gap-1.5">
+                <!-- Tags -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Note -->
+    <footer class="pt-6 pb-4 border-t border-slate-800/80 text-center text-xs text-slate-500 space-y-1">
+      <p>Prepared for UK Central Government &amp; Law Enforcement Security Architect engagements (SFIA 3 &amp; SFIA 5).</p>
+      <p>Aligned with NCSC Cloud Security Principles, NIST CSF, AWS Well-Architected Security Pillar, and GovAssure.</p>
+    </footer>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 border border-slate-700 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none flex items-center gap-2 z-50">
+    <span id="toast-icon">ℹ️</span>
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <script>
+    /* =====================================================================
+       26 High-Calibre UK Gov Security Architect Interview Questions & Data
+       ===================================================================== */
+    const rawQuestions = [
+      {
+        id: 1,
+        category: "UK Gov Assurance",
+        categoryEmoji: "🏛️",
+        level: "SFIA 5",
+        title: "What is a Senior Information Risk Owner (SIRO), and how do you present architectural risks to them?",
+        hint: "Focus on board-level accountability, business risk appetite, and translating technical CVEs into financial or public trust impacts.",
+        answer: `
+          <p><strong>Definition:</strong> A SIRO is an Executive Board member who holds formal statutory accountability for an organisation's overall information risk, departmental risk appetite, and incident liability.</p>
+          <p><strong>Presentation Strategy:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li>Never speak in raw CVE scores or obscure technical jargon; translate into <em>operational downtime, data breach impact, regulatory non-compliance (DPA 2018/GDPR), and reputational fallout</em>.</li>
+            <li>Present risk using a structured <strong>Risk Appetite Framework</strong> and clear RAG (Red/Amber/Green) scoring.</li>
+            <li>Always accompany an identified risk with <strong>proportionate compensating controls</strong>, remediation cost/effort trade-offs, and clear options: <em>Remediate, Mitigate, Transfer, or SIRO Formal Acceptance</em>.</li>
+          </ul>
+        `,
+        tags: ["SIRO", "Risk Appetite", "Governance", "Board Reporting", "Risk Acceptance", "GDPR"],
+        buzzwords: ["Compensating Controls", "Residual Risk", "Board Accountability"]
+      },
+      {
+        id: 2,
+        category: "UK Gov Assurance",
+        categoryEmoji: "🏛️",
+        level: "SFIA 5",
+        title: "Explain the structure, purpose, and lifecycle of an Information Risk and Assurance Report (IRAR).",
+        hint: "Required for every new AWS service/product. Covers system description, threat modeling, and residual risk.",
+        answer: `
+          <p><strong>Purpose:</strong> The IRAR is the primary assurance artifact in UK Government to document the security architecture, threat model, and residual risk of any platform or AWS cloud product.</p>
+          <p><strong>Key Structure:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Executive Summary & System Scope:</strong> High-level system architecture and business objective.</li>
+            <li><strong>Data Classification & Information Flows:</strong> Defining Official / Official-Sensitive boundaries.</li>
+            <li><strong>Threat Assessment & Modeling:</strong> Analysis using STRIDE or PASTA against threat actors.</li>
+            <li><strong>Security Controls Matrix:</strong> Alignment to NCSC Cloud Principles, NIST, and ISO 27001.</li>
+            <li><strong>Residual Risk Log:</strong> Quantified risks, existing mitigations, and formal SIRO sign-off section.</li>
+          </ul>
+          <p><strong>Lifecycle:</strong> Maintained under strict version control in Git/Enterprise Architect; updated upon any significant architectural change or annual review.</p>
+        `,
+        tags: ["IRAR", "Information Assurance", "STRIDE", "Version Control", "Residual Risk", "Accreditation"],
+        buzzwords: ["Threat Modeling", "Risk Acceptance", "Official-Sensitive"]
+      },
+      {
+        id: 3,
+        category: "UK Gov Assurance",
+        categoryEmoji: "🏛️",
+        level: "SFIA 3 & 5",
+        title: "How do you scope, plan, and manage an annual IT Health Check (ITHC)?",
+        hint: "CHECK team engagement, scoping document, legal permissions, and remediation tracking.",
+        answer: `
+          <p><strong>1. Scoping:</strong> Engage a CREST/CHECK-approved testing team. Complete a rigorous scoping document detailing external perimeter endpoints, internal AWS VPCs, container workloads, API gateways, Entrust PKI endpoints, and IAM role boundaries.</p>
+          <p><strong>2. Preparation:</strong> Agree on test windows, emergency contact protocols, rules of engagement (RoE), and ensure cloud-specific penetration testing guidelines from AWS are adhered to.</p>
+          <p><strong>3. Review & Triage:</strong> Once the draft report is received, review findings to filter out false positives and triage severity by CVSS and real contextual impact.</p>
+          <p><strong>4. Remediation Plan:</strong> Develop a remediation action plan (RAP) with product engineering teams, assigning Jira tickets with hard SLAs, and submitting outstanding risks to the SIRO.</p>
+        `,
+        tags: ["ITHC", "CHECK", "CREST", "Penetration Testing", "Remediation Plan", "RoE"],
+        buzzwords: ["Rules of Engagement", "CVSS Triage", "CHECK Team"]
+      },
+      {
+        id: 4,
+        category: "UK Gov Assurance",
+        categoryEmoji: "🏛️",
+        level: "SFIA 5",
+        title: "How do the 14 NCSC Cloud Security Principles govern your AWS architecture decisions?",
+        hint: "Data in transit, separation between consumers, operational monitoring, and supply chain.",
+        answer: `
+          <p>The 14 NCSC Cloud Principles serve as the foundational baseline for UK public sector cloud adoption:</p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Principle 1 (Data in Transit):</strong> Enforce TLS 1.3 across all load balancers, API gateways, and VPNs with strong cipher suites.</li>
+            <li><strong>Principle 2 (Asset Protection):</strong> Encrypt all data at rest using AWS KMS with Customer Managed Keys (CMKs) and dual-layer authorization.</li>
+            <li><strong>Principle 3 (Separation):</strong> Multi-account AWS Landing Zone architecture via AWS Control Tower and strict VPC subnets.</li>
+            <li><strong>Principle 11 (Protective Monitoring):</strong> Centralized log streaming to SIEM for continuous SOC auditing.</li>
+            <li><strong>Principle 13 (Supply Chain):</strong> Software bill of materials (SBOM) scanning and multi-supplier interface isolation.</li>
+          </ul>
+        `,
+        tags: ["NCSC", "Cloud Principles", "Compliance", "AWS Architecture", "Official-Sensitive"],
+        buzzwords: ["Separation of Tenants", "Data in Transit Protection", "Supply Chain Assurance"]
+      },
+      {
+        id: 5,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 3 & 5",
+        title: "How does AWS GuardDuty function, and how do you architect an automated incident response?",
+        hint: "Independent threat detection engine using CloudTrail, VPC Flow, and DNS logs; EventBridge + Lambda response.",
+        answer: `
+          <p><strong>Functionality:</strong> GuardDuty is an agentless intelligent threat detection service that continuously analyses AWS CloudTrail event logs, VPC Flow Logs, DNS query logs, EKS audit logs, and S3 data events using machine learning and threat intelligence feeds.</p>
+          <p><strong>Automated Response Architecture:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li>GuardDuty generates a high-severity finding (e.g. <em>CryptoCurrency:EC2/BitcoinTool.B!DNS</em> or <em>UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration</em>).</li>
+            <li>AWS EventBridge captures the event pattern and triggers an automated AWS Lambda remediation function.</li>
+            <li>The Lambda function isolates the infected EC2/pod via an emergency Quarantine Security Group, revokes temporary STS credentials, snapshots the volume for forensics, and fires an alert to the Operational Security Manager (OSM) via SNS/Slack.</li>
+          </ul>
+        `,
+        tags: ["GuardDuty", "EventBridge", "Lambda", "Incident Response", "VPC Flow Logs", "Forensics"],
+        buzzwords: ["Agentless Detection", "Quarantine Security Group", "Automated Remediation"]
+      },
+      {
+        id: 6,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 5",
+        title: "Compare AWS Shield Standard vs Shield Advanced and their integration with AWS WAF.",
+        hint: "L3/4 DDoS vs L7 DDoS, 24/7 SRT escalation, and cost protection against traffic spikes.",
+        answer: `
+          <p><strong>AWS Shield Standard:</strong> Automatically enabled for all AWS customers at no additional cost; protects against common Layer 3 and Layer 4 infrastructure attacks (SYN floods, UDP reflection attacks).</p>
+          <p><strong>AWS Shield Advanced:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li>Provides granular protection across CloudFront, Route 53, ALB, and AWS Global Accelerator against complex Layer 7 application attacks.</li>
+            <li>Access to the 24/7 <strong>AWS Shield Response Team (SRT)</strong> who write custom WAF rules during active attacks.</li>
+            <li>Includes AWS WAF and AWS Firewall Manager licensing at no extra cost.</li>
+            <li><strong>DDoS Cost Protection:</strong> Provides billing credits for scaling charges incurred by spike traffic during an attack.</li>
+          </ul>
+        `,
+        tags: ["Shield", "Shield Advanced", "DDoS", "AWS WAF", "Route 53", "Layer 7"],
+        buzzwords: ["SRT Support", "Cost Protection", "L3/4 vs L7 Attacks"]
+      },
+      {
+        id: 7,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 3 & 5",
+        title: "How do you architect AWS KMS for UK Official-Sensitive data across multi-account topologies?",
+        hint: "AWS Managed vs Customer Managed Keys (CMKs), key policies, envelope encryption, and cross-account grants.",
+        answer: `
+          <p><strong>Architecture Pattern:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Customer Managed Keys (CMKs):</strong> Always mandate CMKs over AWS Managed Keys to control key policies, enable annual automated rotation, and separate management from usage.</li>
+            <li><strong>Centralized Cryptographic Account:</strong> Host primary CMKs in a dedicated Security/Crypto AWS account or local accounts with strictly bounded Key Policies.</li>
+            <li><strong>Cross-Account Access:</strong> Use KMS Key Policies paired with AWS IAM Roles and explicit KMS Grants rather than wildcards.</li>
+            <li><strong>Envelope Encryption:</strong> Leverage KMS to generate local Data Encryption Keys (DEKs) so plain data never hits the AWS KMS control plane.</li>
+          </ul>
+        `,
+        tags: ["KMS", "CMK", "Envelope Encryption", "Key Rotation", "Cross-Account", "Official-Sensitive"],
+        buzzwords: ["Data Encryption Keys (DEK)", "Key Policy Isolation", "Annual Rotation"]
+      },
+      {
+        id: 8,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 5",
+        title: "How do Service Control Policies (SCPs) in AWS Control Tower enforce platform security baselines?",
+        hint: "Preventative guardrails, root account limitations, region locking, and guardrails that cannot be overridden by local admins.",
+        answer: `
+          <p><strong>Role:</strong> SCPs are top-down JSON policies applied at the AWS Organization or Organizational Unit (OU) level that set the maximum allowable permissions for all accounts underneath them.</p>
+          <p><strong>Essential UK Gov SCP Guardrails:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Region Deny:</strong> Deny all actions outside of designated UK regions (e.g. <code>eu-west-2</code> London) to ensure sovereign data residency.</li>
+            <li><strong>Prevent Disabling Security Tooling:</strong> Explicitly deny actions that stop GuardDuty, disable CloudTrail, or alter AWS Config rules.</li>
+            <li><strong>Prevent Root S3 Public Access:</strong> Prohibit removing S3 Block Public Access at the account level.</li>
+            <li><strong>Inviolability:</strong> Even account root users or full administrators within child accounts cannot bypass an SCP deny rule.</li>
+          </ul>
+        `,
+        tags: ["Control Tower", "SCPs", "Landing Zone", "Guardrails", "Data Residency", "IAM"],
+        buzzwords: ["Inviolable Guardrails", "Region Deny", "Account Root Restriction"]
+      },
+      {
+        id: 9,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 3 & 5",
+        title: "How do you architect an AWS Backup solution resistant to ransomware and rogue admins?",
+        hint: "WORM model, AWS Backup Vault Lock, cross-account and cross-region replication.",
+        answer: `
+          <p><strong>Ransomware-Resistant Pattern:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>AWS Backup Vault Lock:</strong> Enforce WORM (Write Once, Read Many) in Compliance Mode. This prevents anyone—including the AWS account root user and cloud administrators—from deleting snapshots or reducing retention periods.</li>
+            <li><strong>Cross-Account Air-Gap:</strong> Automatically copy snapshots from production accounts into an isolated, dedicated 'Backup and Recovery' AWS account with separate IAM access and Entrust multi-factor authentication.</li>
+            <li><strong>Cross-Region Replication:</strong> Replicate backups to a secondary UK region (or compliant EEA region) for disaster recovery.</li>
+            <li><strong>Continuous Testing:</strong> Schedule automated recovery drills using AWS Backup audit frameworks to prove RTO and RPO metrics to the SIRO.</li>
+          </ul>
+        `,
+        tags: ["AWS Backup", "Vault Lock", "Ransomware", "WORM", "Air Gap", "Disaster Recovery"],
+        buzzwords: ["Compliance Mode", "Air-Gapped Vault", "RTO / RPO Proof"]
+      },
+      {
+        id: 10,
+        category: "Network & Edge",
+        categoryEmoji: "🛡️",
+        level: "SFIA 5",
+        title: "Explain the architecture of a Security Gateway combining Nginx and WSO2 API Manager.",
+        hint: "DMZ reverse proxy, TLS termination, API routing, rate limiting, and OAuth 2.0 token validation.",
+        answer: `
+          <p><strong>Architecture Topology:</strong></p>
+          <ol class="list-decimal pl-5 space-y-1 text-slate-300">
+            <li><strong>Outer Perimeter (Public / DMZ):</strong> AWS Network Load Balancer (NLB) distributing incoming traffic to hardened <strong>Nginx</strong> reverse proxy clusters in public subnets. Nginx handles initial TLS 1.3 termination, HTTP header sanitization, IP allow-listing, and basic DDoS throttling.</li>
+            <li><strong>Security Gateway Layer:</strong> Nginx reverse-proxies traffic into the <strong>WSO2 API Gateway</strong> hosted in a private security subnet.</li>
+            <li><strong>WSO2 Controls:</strong> WSO2 validates OAuth 2.0 / JWT tokens, performs fine-grained scope checking, enforces tenant throttling, and logs API consumer metrics.</li>
+            <li><strong>Backend Services:</strong> WSO2 routes authenticated requests across internal VPC endpoints or transit gateways to backend microservices using mutual TLS (mTLS).</li>
+          </ol>
+        `,
+        tags: ["WSO2", "Nginx", "Reverse Proxy", "Security Gateway", "OAuth 2.0", "DMZ"],
+        buzzwords: ["Two-Tier Ingress", "Token Introspection", "Layer 7 Gateway"]
+      },
+      {
+        id: 11,
+        category: "Network & Edge",
+        categoryEmoji: "🛡️",
+        level: "SFIA 3 & 5",
+        title: "How do you implement mutual TLS (mTLS) with Entrust PKI for inter-agency communications?",
+        hint: "Client certificates, private CA hierarchy, certificate revocation lists (CRLs), and zero trust.",
+        answer: `
+          <p><strong>Implementation Strategy:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>PKI Hierarchy:</strong> Establish an enterprise Private CA with Entrust. Issue x509 client certificates to partner agencies and backend microservices.</li>
+            <li><strong>Ingress Configuration:</strong> At the Nginx/ALB or WSO2 gateway, enable <code>ssl_verify_client on;</code> and install the Entrust Root and Intermediate CA bundle.</li>
+            <li><strong>Handshake Verification:</strong> During TLS handshake, the client presents its certificate; the gateway validates authenticity, signature, subject DN, and validity period.</li>
+            <li><strong>Revocation Checking:</strong> Implement real-time OCSP stapling or automated sync of Certificate Revocation Lists (CRLs) from Entrust to instantly block compromised clients.</li>
+          </ul>
+        `,
+        tags: ["Entrust", "PKI", "mTLS", "Certificates", "OCSP", "Inter-Agency"],
+        buzzwords: ["Mutual Authentication", "Certificate Revocation List (CRL)", "Zero Trust Ingress"]
+      },
+      {
+        id: 12,
+        category: "Network & Edge",
+        categoryEmoji: "🛡️",
+        level: "SFIA 3 & 5",
+        title: "How do you harden an Nginx reverse proxy to meet UK Government Official standards?",
+        hint: "Security headers, disabling server tokens, restricting cipher suites, and buffer overflow controls.",
+        answer: `
+          <p><strong>Hardening Measures:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Information Concealment:</strong> Disable <code>server_tokens off;</code> to prevent OS/version leakage in response headers.</li>
+            <li><strong>TLS Hardening:</strong> Restrict to TLSv1.3 and TLSv1.2 only; configure high-strength ciphers (e.g. ECDHE-ECDSA-AES256-GCM-SHA384); disable SSLv3, TLS 1.0, and 1.1.</li>
+            <li><strong>Security Headers:</strong> Inject <code>Strict-Transport-Security (HSTS)</code>, <code>Content-Security-Policy (CSP)</code>, <code>X-Frame-Options: DENY</code>, and <code>X-Content-Type-Options: nosniff</code>.</li>
+            <li><strong>Buffer Overflow & DoS Protection:</strong> Tune <code>client_body_buffer_size</code>, <code>limit_req_zone</code> for request rate limiting, and <code>limit_conn_zone</code> to stop connection starvation.</li>
+          </ul>
+        `,
+        tags: ["Nginx", "Hardening", "HSTS", "CSP", "Reverse Proxy", "TLS 1.3"],
+        buzzwords: ["Server Tokens Disabled", "HSTS Preload", "Connection Throttling"]
+      },
+      {
+        id: 13,
+        category: "Network & Edge",
+        categoryEmoji: "🛡️",
+        level: "SFIA 5",
+        title: "How do you design secure hybrid connectivity between on-premises data centres and AWS?",
+        hint: "AWS Direct Connect, MACsec, IPsec VPN over DX, and Transit Gateway architecture.",
+        answer: `
+          <p><strong>Architecture Blueprint:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Primary Transport:</strong> Dedicated AWS Direct Connect (DX) 10Gbps links with dual redundant circuits across diverse points of presence (PoPs).</li>
+            <li><strong>Encryption in Transit:</strong> Layer 2 MACsec encryption on Direct Connect links where supported, paired with an overlay of <strong>IPsec VPN tunnels</strong> connecting customer routers to an AWS Transit Gateway (TGW).</li>
+            <li><strong>Inspection & Firewalls:</strong> Route all hybrid ingress/egress through a centralized Inspection VPC containing next-gen firewalls (NGFW) or AWS Network Firewall before reaching data VPCs.</li>
+            <li><strong>DNS & Routing:</strong> Route 53 Resolver Outposts and Private Hosted Zones to seamlessly resolve internal on-prem and cloud services without public DNS queries.</li>
+          </ul>
+        `,
+        tags: ["Direct Connect", "Transit Gateway", "IPsec", "VPN", "Hybrid Cloud", "Inspection VPC"],
+        buzzwords: ["MACsec Encryption", "Inspection VPC", "Redundant DX PoPs"]
+      },
+      {
+        id: 14,
+        category: "Protective Monitoring",
+        categoryEmoji: "👁️",
+        level: "SFIA 5",
+        title: "Design a protective monitoring architecture shipping multi-account AWS logs to a central SIEM.",
+        hint: "CloudTrail, CloudWatch, Kinesis Data Firehose, S3 Log Archive, Splunk/Sentinel integration.",
+        answer: `
+          <p><strong>Architecture Pattern:</strong></p>
+          <ol class="list-decimal pl-5 space-y-1 text-slate-300">
+            <li><strong>Log Generation:</strong> Enable Organization-wide AWS CloudTrail (management & data events), VPC Flow Logs, GuardDuty findings, and CloudWatch Log groups across all spoke accounts.</li>
+            <li><strong>Streaming Pipeline:</strong> Spoke accounts stream logs via CloudWatch Subscription Filters to an <strong>Amazon Kinesis Data Firehose</strong> in a dedicated Logging AWS Account.</li>
+            <li><strong>Storage & Immutability:</strong> Firehose delivers raw logs into an isolated S3 Log Archive bucket configured with <strong>S3 Object Lock (WORM)</strong> and encrypted with KMS CMK.</li>
+            <li><strong>SIEM Integration:</strong> Firehose pushes normalized JSON directly to the enterprise SIEM (e.g. Splunk HTTP Event Collector or Microsoft Sentinel) for continuous 24/7 SOC correlation and alerting.</li>
+          </ol>
+        `,
+        tags: ["Protective Monitoring", "SIEM", "CloudTrail", "Kinesis Firehose", "S3 Object Lock", "SOC"],
+        buzzwords: ["WORM Storage", "Kinesis Data Firehose", "Organization Trail"]
+      },
+      {
+        id: 15,
+        category: "Protective Monitoring",
+        categoryEmoji: "👁️",
+        level: "SFIA 3 & 5",
+        title: "What are the essential AWS CloudTrail events that must trigger high-priority SOC alerts?",
+        hint: "Root login, IAM policy alteration, CloudTrail tampering, security group modifications.",
+        answer: `
+          <p>Essential alerting triggers (via CloudWatch Metric Filters / SIEM correlation rules):</p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>ConsoleLogin with Root:</strong> Any usage of AWS Root credentials.</li>
+            <li><strong>StopLogging / DeleteTrail:</strong> Any attempt to disable or delete CloudTrail or GuardDuty.</li>
+            <li><strong>IAM Privilege Escalation:</strong> Actions like <code>CreateAccessKey</code>, <code>AttachUserPolicy</code>, <code>PutGroupPolicy</code> for admin users.</li>
+            <li><strong>Network Boundary Weakening:</strong> <code>AuthorizeSecurityGroupIngress</code> permitting <code>0.0.0.0/0</code> on SSH (22) or RDP (3389).</li>
+            <li><strong>KMS Key Destruction:</strong> <code>ScheduleKeyDeletion</code> or <code>DisableKey</code> on production encryption keys.</li>
+            <li><strong>S3 Bucket Policy Degradation:</strong> <code>PutBucketPublicAccessBlock</code> alterations.</li>
+          </ul>
+        `,
+        tags: ["CloudTrail", "Alerting", "SOC", "Root Login", "Privilege Escalation", "Security Groups"],
+        buzzwords: ["StopLogging Trigger", "0.0.0.0/0 Detection", "KMS Destruction Alert"]
+      },
+      {
+        id: 16,
+        category: "Protective Monitoring",
+        categoryEmoji: "👁️",
+        level: "SFIA 3 & 5",
+        title: "How do you protect log integrity and prevent log tampering by malicious internal actors?",
+        hint: "S3 Object Lock, KMS key policies, separate accounts, and CloudTrail log file validation.",
+        answer: `
+          <p><strong>Key Controls:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>CloudTrail Log File Validation:</strong> Enable log file validation which computes SHA-256 hashes and digital signatures to detect modifications.</li>
+            <li><strong>Dedicated Log Archive Account:</strong> Store logs in an isolated AWS account with no shared IAM roles from production and strictly restricted console access.</li>
+            <li><strong>S3 Object Lock:</strong> Enforce Compliance Mode retention so that logs cannot be deleted or overwritten by any user or root account for the designated retention window (e.g., 365 days).</li>
+            <li><strong>KMS Key Policy Isolation:</strong> Spoke accounts only have <code>kms:GenerateDataKey</code> permissions, but never <code>kms:Decrypt</code> or administration rights on the log archive keys.</li>
+          </ul>
+        `,
+        tags: ["Log Integrity", "Object Lock", "SHA-256", "Log Tampering", "CloudTrail"],
+        buzzwords: ["Log File Validation", "Compliance Mode", "Key Policy Isolation"]
+      },
+      {
+        id: 17,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 5",
+        title: "What is the concrete difference between SFIA Level 3 and SFIA Level 5 Security Architects?",
+        hint: "Applying standard patterns vs ensuring strategic alignment, influencing boards, and resolving conflict.",
+        answer: `
+          <p><strong>SFIA Level 3 (Apply):</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li>Works under routine guidance and executes structured security tasks.</li>
+            <li>Applies established security patterns (e.g. configuring Nginx, writing IAM roles, producing basic HLD sections).</li>
+            <li>Identifies technical vulnerabilities and works with DevOps teams to patch code.</li>
+          </ul>
+          <p class="pt-2"><strong>SFIA Level 5 (Ensure, Advise):</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li>Exercises broad authority and takes full accountability for security architecture across multiple products.</li>
+            <li>Defines security roadmaps, authors IRARs, influences the SIRO, and chairs Technical Design Boards.</li>
+            <li>Navigates complex multi-supplier commercial disagreements, drives modernization, and advises executive leadership.</li>
+          </ul>
+        `,
+        tags: ["SFIA", "SFIA 3", "SFIA 5", "Leadership", "Career Progression", "Governance"],
+        buzzwords: ["Autonomy & Influence", "Technical Design Authority", "Strategic Accountability"]
+      },
+      {
+        id: 18,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 5",
+        title: "How do you manage security architecture in a multi-supplier, multi-vendor government environment?",
+        hint: "Clear contractual security requirements, design gate reviews, avoiding supplier lock-in, and clear RACI.",
+        answer: `
+          <p><strong>Multi-Supplier Governance Approach:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Contractual Security Baselines:</strong> Define unambiguous Security Acceptance Criteria in supplier Statements of Work (SoW) tied to NCSC standards and ITHC compliance.</li>
+            <li><strong>Architecture Gate Reviews:</strong> Require all suppliers to pass formal Technical Design Authority (TDA) and Security Review Boards before writing production code.</li>
+            <li><strong>Clear RACI Matrix:</strong> Establish an unambiguous RACI detailing boundaries between cloud infrastructure providers, application developers, and the internal platform team.</li>
+            <li><strong>Objective Auditing:</strong> Run automated pipeline checks (e.g. Checkov, Trivy, SonarQube) so security acceptance is based on empirical data, not subjective supplier claims.</li>
+          </ul>
+        `,
+        tags: ["Multi-Supplier", "Governance", "RACI", "Design Authority", "Contractual Baseline"],
+        buzzwords: ["Security Acceptance Criteria", "RACI Matrix", "Technical Design Authority (TDA)"]
+      },
+      {
+        id: 19,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 3 & 5",
+        title: "How does the Security Architect collaborate with and support the Operational Security Manager (OSM)?",
+        hint: "Architecture design vs operational execution; building telemetry into designs so the OSM can monitor effectively.",
+        answer: `
+          <p><strong>Symbiotic Relationship:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Design-to-Operations Handoff:</strong> The Security Architect ensures new cloud architectures natively output the logging, alerting, and operational runbooks that the OSM needs for daily protective monitoring.</li>
+            <li><strong>Feedback Loop:</strong> The OSM shares active threat intelligence and operational incident trends; the Architect incorporates these lessons into future High-Level Designs (HLDs).</li>
+            <li><strong>Assistance in Escalations:</strong> When the OSM encounters a critical vulnerability or unmitigated 0-day, the Architect rapidly designs architectural workarounds (e.g. WAF rules, network ACL drops) while permanent patches are tested.</li>
+          </ul>
+        `,
+        tags: ["OSM", "Collaboration", "Runbooks", "Operational Handover", "Incident Response"],
+        buzzwords: ["Operational Handover", "Telemetry By Design", "Continuous Feedback Loop"]
+      },
+      {
+        id: 20,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 5",
+        title: "What key sections must be present in a robust Security High-Level Design (HLD)?",
+        hint: "Trust boundaries, data flows, cryptographic controls, IAM, and compliance matrix.",
+        answer: `
+          <p>A comprehensive Security HLD must include:</p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Business Context & Scope:</strong> Services covered and system boundaries.</li>
+            <li><strong>Data Classification & Data Flow Diagrams:</strong> Showing clear trust boundaries, DMZs, and ingress/egress points.</li>
+            <li><strong>Authentication & Authorization:</strong> IAM roles, STS temporary credentials, mTLS, and RBAC models.</li>
+            <li><strong>Cryptographic Design:</strong> Key management lifecycle, KMS CMK usage, cipher suites for in-transit and at-rest protection.</li>
+            <li><strong>Threat Model & Mitigations:</strong> Documented threats (e.g. STRIDE) and corresponding architectural controls.</li>
+            <li><strong>Protective Monitoring & Audit:</strong> Log collection, alerting thresholds, and SIEM integration.</li>
+          </ul>
+        `,
+        tags: ["HLD", "High-Level Design", "Architecture", "STRIDE", "Data Flow", "Trust Boundaries"],
+        buzzwords: ["Trust Boundary Mapping", "Cryptographic Architecture", "Data Flow Diagrams"]
+      },
+      {
+        id: 21,
+        category: "AWS Security",
+        categoryEmoji: "☁️",
+        level: "SFIA 3 & 5",
+        title: "How do you implement least-privilege IAM and eliminate static AWS credentials in CI/CD pipelines?",
+        hint: "OpenID Connect (OIDC) federation with GitHub Actions or GitLab, short-lived STS tokens.",
+        answer: `
+          <p><strong>Modern CI/CD IAM Architecture:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Eliminate Static IAM User Keys:</strong> Ban the generation of long-lived <code>AKIA...</code> access keys for deployment runners.</li>
+            <li><strong>OIDC Identity Federation:</strong> Configure an OpenID Connect (OIDC) identity provider in AWS IAM trust relationships matching the CI/CD pipeline (e.g. GitHub Actions, GitLab CI).</li>
+            <li><strong>Scoped AssumeRole:</strong> The runner assumes a role dynamically using temporary AWS STS tokens with strict condition blocks (e.g. <code>repo:gov-org/my-service:ref:refs/heads/main</code>).</li>
+            <li><strong>Permission Boundaries:</strong> Apply IAM Permission Boundaries so deployment pipelines cannot create roles with elevated admin privileges.</li>
+          </ul>
+        `,
+        tags: ["IAM", "OIDC", "CI/CD", "Least Privilege", "STS", "DevSecOps"],
+        buzzwords: ["OIDC Federation", "Temporary STS Tokens", "Permission Boundaries"]
+      },
+      {
+        id: 22,
+        category: "Network & Edge",
+        categoryEmoji: "🛡️",
+        level: "SFIA 3 & 5",
+        title: "How do VPC Endpoints (AWS PrivateLink) enhance cloud data security and prevent data exfiltration?",
+        hint: "Bypassing internet gateways, keeping traffic within AWS backbone, and endpoint policies.",
+        answer: `
+          <p><strong>Security Value:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Traffic Isolation:</strong> VPC Endpoints allow EC2 and ECS services to access AWS resources (S3, KMS, Secrets Manager) privately across the AWS internal backbone without requiring Internet Gateways or NAT Gateways.</li>
+            <li><strong>VPC Endpoint Policies:</strong> Prevent data exfiltration by applying strict JSON resource policies directly on the endpoint (e.g. allowing access <em>only</em> to your departmental S3 bucket, preventing attackers from exfiltrating data to an external personal S3 bucket).</li>
+            <li><strong>Network ACL and SG Controls:</strong> PrivateLink Elastic Network Interfaces (ENIs) inherit private IP space, enabling strict security group auditing.</li>
+          </ul>
+        `,
+        tags: ["VPC Endpoints", "PrivateLink", "Data Exfiltration", "S3", "Zero Trust"],
+        buzzwords: ["Endpoint Policies", "Private AWS Backbone", "Exfiltration Prevention"]
+      },
+      {
+        id: 23,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 5",
+        title: "How do you handle a scenario where product delivery pressures conflict with mandatory security controls?",
+        hint: "Risk negotiation, temporary compensating controls, formal risk sign-off, and avoiding becoming the 'Department of No'.",
+        answer: `
+          <p><strong>Professional Strategy:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Collaborative Risk Assessment:</strong> Avoid becoming a blocker ("Department of No"). Understand the commercial and political urgency behind the product milestone.</li>
+            <li><strong>Explore Compensating Controls:</strong> Investigate whether temporary controls (e.g. heightened protective monitoring alerts, restricted network access, WAF rate limits) can adequately mitigate the immediate risk.</li>
+            <li><strong>Time-Bounded Concession:</strong> If a deviation is necessary, document it formally in an interim IRAR with an explicit <em>time-bounded expiry date</em> and agreed remediation ticket in the product backlog.</li>
+            <li><strong>SIRO Escalation:</strong> If the residual risk exceeds the agreed organizational appetite, escalate formally to the SIRO for decision. Architects advise; the business owns the risk.</li>
+          </ul>
+        `,
+        tags: ["Conflict Resolution", "Risk Appetite", "Stakeholder Management", "Compensating Controls"],
+        buzzwords: ["Time-Bounded Concession", "Compensating Mitigations", "Business Risk Ownership"]
+      },
+      {
+        id: 24,
+        category: "UK Gov Assurance",
+        categoryEmoji: "🏛️",
+        level: "SFIA 3 & 5",
+        title: "How do you align AWS security architecture with the NIST Cybersecurity Framework (CSF)?",
+        hint: "Identify, Protect, Detect, Respond, Recover (and Govern in CSF 2.0).",
+        answer: `
+          <p><strong>NIST CSF Mapping:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Identify:</strong> AWS Organizations, AWS Config, and AWS Systems Manager for asset discovery and inventory.</li>
+            <li><strong>Protect:</strong> IAM least-privilege, KMS CMKs for encryption at rest, TLS 1.3 for data in transit, WAF and Security Groups for network isolation.</li>
+            <li><strong>Detect:</strong> Amazon GuardDuty, Security Hub, CloudWatch Alarms, and centralized SIEM ingestion.</li>
+            <li><strong>Respond:</strong> EventBridge automated response workflows and AWS Incident Detection playbooks.</li>
+            <li><strong>Recover:</strong> AWS Backup with Vault Lock, cross-region replication, and automated disaster recovery testing.</li>
+          </ul>
+        `,
+        tags: ["NIST", "Cybersecurity Framework", "Mapping", "Compliance", "AWS Well-Architected"],
+        buzzwords: ["CSF Core Functions", "Asset Inventory", "Defense in Depth"]
+      },
+      {
+        id: 25,
+        category: "Leadership & SFIA",
+        categoryEmoji: "👔",
+        level: "SFIA 5",
+        title: "How do you use Sparx Enterprise Architect to maintain architectural traceability for governance?",
+        hint: "ArchiMate modeling, linking security controls to threat models, and version-controlled repositories.",
+        answer: `
+          <p><strong>Usage in UK Government:</strong></p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>ArchiMate Standards:</strong> Create standardized architectural models illustrating Business, Application, and Technology layers.</li>
+            <li><strong>Control Traceability:</strong> Link business requirements and threat catalogs directly to specific technical security components (e.g. linking GDPR Article 32 to KMS and WSO2 components).</li>
+            <li><strong>Central Single Source of Truth:</strong> Maintain version-controlled shared model repositories across multiple suppliers and in-house teams.</li>
+            <li><strong>Audit Artifact Generation:</strong> Export authoritative architectural diagrams and matrices directly into IRAR documents for SIRO board submission.</li>
+          </ul>
+        `,
+        tags: ["Sparx EA", "Enterprise Architect", "ArchiMate", "Traceability", "Architecture Governance"],
+        buzzwords: ["ArchiMate Modeling", "Requirements Traceability", "Single Source of Truth"]
+      },
+      {
+        id: 26,
+        category: "Mock Interview",
+        categoryEmoji: "🎯",
+        level: "SFIA 5",
+        title: "Walk us through an end-to-end security architecture review for a new citizen-facing AWS microservice.",
+        hint: "Comprehensive synthesis: Ingress, Auth, Platform, Encryption, Monitoring, Assurance, and Governance.",
+        answer: `
+          <p><strong>Comprehensive Walkthrough:</strong></p>
+          <ol class="list-decimal pl-5 space-y-1 text-slate-300">
+            <li><strong>Ingress & Perimeter:</strong> Route53 DNSSEC -> AWS CloudFront with AWS Shield Advanced -> WAF with managed rule sets -> Nginx reverse proxy -> WSO2 API Gateway with mTLS and JWT validation.</li>
+            <li><strong>Compute & Isolation:</strong> Containerized microservices running on AWS Fargate/ECS within private subnets across multiple AZs; no public IP assignment.</li>
+            <li><strong>Data Protection:</strong> Sensitive citizen data stored in Amazon Aurora PostgreSQL encrypted with Customer Managed Keys (KMS CMK); database in isolated data subnets.</li>
+            <li><strong>Protective Monitoring:</strong> Full audit trail streamed to SIEM via Kinesis Firehose; GuardDuty monitoring VPC and IAM; alerts integrated with PagerDuty for the OSM.</li>
+            <li><strong>Assurance & Sign-Off:</strong> Production of the IRAR, threat modeling with STRIDE, commissioning a CHECK ITHC, and presenting residual risks to the SIRO for go-live approval.</li>
+          </ol>
+        `,
+        tags: ["Synthesis", "End-to-End", "Microservices", "Fargate", "Aurora", "ITHC", "SIRO"],
+        buzzwords: ["Defense in Depth", "Citizen Data Protection", "Full Assurance Lifecycle"]
+      }
+    ];
+
+    /* =====================================================================
+       Application State
+       ===================================================================== */
+    let currentMode = 'flashcards'; // 'flashcards' | 'revision' | 'simulator'
+    let currentFilter = 'ALL';
+    let searchQuery = '';
+    let cardDeck = [...rawQuestions];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let knownCards = new Set();
+    let reviewCards = new Set();
+
+    // Timer state for simulator
+    let simTimerInterval = null;
+    let simSecondsRemaining = 180;
+    let isTimerRunning = false;
+
+    /* =====================================================================
+       Initialization
+       ===================================================================== */
+    window.onload = function() {
+      // Load saved state from localStorage if available
+      try {
+        const savedKnown = localStorage.getItem('gov_sec_arch_known');
+        if (savedKnown) knownCards = new Set(JSON.parse(savedKnown));
+        const savedReview = localStorage.getItem('gov_sec_arch_review');
+        if (savedReview) reviewCards = new Set(JSON.parse(savedReview));
+      } catch (e) {
+        console.warn('Storage not accessible', e);
+      }
+
+      renderCategoryPills();
+      updateFilteredDeck();
+      renderRevisionList();
+      updateStats();
+      setupKeyboardShortcuts();
+    };
+
+    /* =====================================================================
+       Category Filtering & Search
+       ===================================================================== */
+    const categories = [
+      { id: 'ALL', label: 'All Questions', emoji: '🌐' },
+      { id: 'UK Gov Assurance', label: 'UK Gov & SIRO', emoji: '🏛️' },
+      { id: 'AWS Security', label: 'AWS Security & Cloud', emoji: '☁️' },
+      { id: 'Network & Edge', label: 'Network, WSO2 & PKI', emoji: '🛡️' },
+      { id: 'Protective Monitoring', label: 'Monitoring & SIEM', emoji: '👁️' },
+      { id: 'Leadership & SFIA', label: 'SFIA 3 vs 5 & Leadership', emoji: '👔' },
+      { id: 'Mock Interview', label: 'Mock Board Questions', emoji: '🎯' }
+    ];
+
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills');
+      container.innerHTML = categories.map(cat => {
+        const isActive = currentFilter === cat.id;
+        return `
+          <button onclick="setCategoryFilter('${cat.id}')" 
+                  class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
+                    isActive 
+                      ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30' 
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700/80 hover:text-white'
+                  }">
+            <span>${cat.emoji}</span>
+            <span>${cat.label}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategoryFilter(catId) {
+      currentFilter = catId;
+      renderCategoryPills();
+      updateFilteredDeck();
+      renderRevisionList();
+      showToast(`Filtered by ${catId === 'ALL' ? 'All Categories' : catId}`, '🔍');
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      updateFilteredDeck();
+      renderRevisionList();
+    }
+
+    function updateFilteredDeck() {
+      cardDeck = rawQuestions.filter(q => {
+        const matchCategory = currentFilter === 'ALL' || q.category === currentFilter;
+        const matchSearch = !searchQuery || 
+          q.title.toLowerCase().includes(searchQuery) ||
+          q.answer.toLowerCase().includes(searchQuery) ||
+          q.tags.some(t => t.toLowerCase().includes(searchQuery));
+        return matchCategory && matchSearch;
+      });
+
+      currentIndex = 0;
+      isFlipped = false;
+      renderCurrentCard();
+      updateProgressBar();
+    }
+
+    /* =====================================================================
+       Flashcard Engine
+       ===================================================================== */
+    function renderCurrentCard() {
+      const cardInner = document.getElementById('card-inner');
+      if (isFlipped) {
+        cardInner.classList.remove('rotate-y-180');
+        isFlipped = false;
+      }
+
+      if (cardDeck.length === 0) {
+        document.getElementById('cf-category').innerText = 'No matches';
+        document.getElementById('cf-level').innerText = 'N/A';
+        document.getElementById('cf-title').innerText = 'No questions match your search or filter criteria. Try resetting the filters!';
+        document.getElementById('cf-hint').innerText = 'Clear the search box above to view all flashcards.';
+        document.getElementById('card-counter').innerText = '0 / 0';
+        return;
+      }
+
+      const q = cardDeck[currentIndex];
+
+      // Front
+      document.getElementById('cf-category').innerHTML = `${q.categoryEmoji} ${q.category}`;
+      document.getElementById('cf-level').innerText = q.level;
+      document.getElementById('cf-title').innerText = q.title;
+      document.getElementById('cf-hint').innerText = q.hint;
+
+      // Status indicator on Front
+      const statusBadge = document.getElementById('cf-status-badge');
+      if (knownCards.has(q.id)) {
+        statusBadge.innerHTML = '<span class="text-xs text-emerald-400 font-bold bg-emerald-950/70 border border-emerald-700/60 px-2 py-0.5 rounded-full">✓ Mastered</span>';
+      } else if (reviewCards.has(q.id)) {
+        statusBadge.innerHTML = '<span class="text-xs text-amber-400 font-bold bg-amber-950/70 border border-amber-700/60 px-2 py-0.5 rounded-full">↻ Needs Review</span>';
+      } else {
+        statusBadge.innerHTML = '';
+      }
+
+      // Back
+      document.getElementById('cb-category').innerHTML = `${q.categoryEmoji} ${q.category}`;
+      document.getElementById('cb-answer').innerHTML = q.answer;
+      
+      const tagsContainer = document.getElementById('cb-tags');
+      tagsContainer.innerHTML = q.tags.map(tag => `
+        <span class="px-2 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 text-xs font-mono font-medium">
+          #${tag}
+        </span>
+      `).join('');
+
+      document.getElementById('card-counter').innerText = `${currentIndex + 1} / ${cardDeck.length}`;
+      updateProgressBar();
+    }
+
+    function flipCard() {
+      const cardInner = document.getElementById('card-inner');
+      isFlipped = !isFlipped;
+      if (isFlipped) {
+        cardInner.classList.add('rotate-y-180');
+      } else {
+        cardInner.classList.remove('rotate-y-180');
+      }
+    }
+
+    function nextCard() {
+      if (cardDeck.length === 0) return;
+      currentIndex = (currentIndex + 1) % cardDeck.length;
+      renderCurrentCard();
+    }
+
+    function prevCard() {
+      if (cardDeck.length === 0) return;
+      currentIndex = (currentIndex - 1 + cardDeck.length) % cardDeck.length;
+      renderCurrentCard();
+    }
+
+    function shuffleCards() {
+      for (let i = cardDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cardDeck[i], cardDeck[j]] = [cardDeck[j], cardDeck[i]];
+      }
+      currentIndex = 0;
+      renderCurrentCard();
+      showToast('Deck shuffled randomly!', '🔀');
+    }
+
+    function markCard(known, event) {
+      if (event) event.stopPropagation();
+      if (cardDeck.length === 0) return;
+
+      const currentQ = cardDeck[currentIndex];
+      if (known) {
+        knownCards.add(currentQ.id);
+        reviewCards.delete(currentQ.id);
+        showToast('Marked as Mastered! Keep it up!', '✅');
+      } else {
+        reviewCards.add(currentQ.id);
+        knownCards.delete(currentQ.id);
+        showToast('Marked for Revision!', '🔄');
+      }
+
+      saveProgress();
+      updateStats();
+      renderCurrentCard();
+
+      // Automatically advance to next card after a brief beat
+      setTimeout(() => {
+        nextCard();
+      }, 250);
+    }
+
+    function updateProgressBar() {
+      const bar = document.getElementById('deck-progress-bar');
+      if (cardDeck.length === 0) {
+        bar.style.width = '0%';
+        return;
+      }
+      const pct = Math.round(((currentIndex + 1) / cardDeck.length) * 100);
+      bar.style.width = `${pct}%`;
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').innerText = rawQuestions.length;
+      document.getElementById('stat-known').innerText = knownCards.size;
+      document.getElementById('stat-review').innerText = reviewCards.size;
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem('gov_sec_arch_known', JSON.stringify([...knownCards]));
+        localStorage.setItem('gov_sec_arch_review', JSON.stringify([...reviewCards]));
+      } catch (e) {
+        console.warn('Could not save progress to localStorage', e);
+      }
+    }
+
+    function resetProgress() {
+      knownCards.clear();
+      reviewCards.clear();
+      saveProgress();
+      updateStats();
+      renderCurrentCard();
+      renderRevisionList();
+      showToast('Study progress reset!', '♻️');
+    }
+
+    /* =====================================================================
+       Revision Sheet View
+       ===================================================================== */
+    function renderRevisionList() {
+      const container = document.getElementById('revision-list');
+      if (cardDeck.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center bg-slate-900 border border-slate-800 rounded-xl">
+            <p class="text-slate-400">No questions match your current query.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cardDeck.map(q => {
+        const isKnown = knownCards.has(q.id);
+        const isReview = reviewCards.has(q.id);
+        const statusBadge = isKnown 
+          ? `<span class="text-xs px-2 py-0.5 rounded font-semibold bg-emerald-950/70 text-emerald-400 border border-emerald-800">Mastered ✅</span>`
+          : isReview 
+          ? `<span class="text-xs px-2 py-0.5 rounded font-semibold bg-amber-950/70 text-amber-400 border border-amber-800">Review 🔄</span>`
+          : '';
+
+        return `
+          <details class="group bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-xl transition duration-150 overflow-hidden">
+            <summary class="p-4 cursor-pointer flex items-center justify-between gap-3 list-none select-none">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">${q.categoryEmoji}</span>
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800/60 font-semibold">${q.level}</span>
+                    <span class="text-xs text-slate-400">${q.category}</span>
+                    ${statusBadge}
+                  </div>
+                  <h3 class="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-blue-300 transition">
+                    ${q.title}
+                  </h3>
+                </div>
+              </div>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform duration-200">▾</span>
+            </summary>
+            
+            <div class="p-5 pt-2 border-t border-slate-800/80 bg-slate-950/60 space-y-3">
+              <div class="text-slate-200 text-sm leading-relaxed space-y-2">
+                ${q.answer}
+              </div>
+              <div class="pt-2 flex flex-wrap gap-1.5 items-center">
+                <span class="text-xs text-slate-500 font-mono">Buzzwords:</span>
+                ${q.tags.map(t => `<span class="px-2 py-0.5 bg-slate-800 text-slate-300 text-xs rounded font-mono border border-slate-700">#${t}</span>`).join('')}
+              </div>
+            </div>
+          </details>
+        `;
+      }).join('');
+    }
+
+    function expandAll(expand) {
+      const detailsList = document.querySelectorAll('#revision-list details');
+      detailsList.forEach(d => {
+        if (expand) d.setAttribute('open', '');
+        else d.removeAttribute('open');
+      });
+    }
+
+    /* =====================================================================
+       Mock Interview Simulator
+       ===================================================================== */
+    let currentMockQuestion = null;
+
+    function generateRandomMockQuestion() {
+      const randIdx = Math.floor(Math.random() * rawQuestions.length);
+      currentMockQuestion = rawQuestions[randIdx];
+
+      document.getElementById('sim-category').innerHTML = `${currentMockQuestion.categoryEmoji} ${currentMockQuestion.category}`;
+      document.getElementById('sim-level').innerText = currentMockQuestion.level;
+      document.getElementById('sim-index').innerText = currentMockQuestion.id;
+      document.getElementById('sim-title').innerText = currentMockQuestion.title;
+
+      document.getElementById('sim-answer-content').innerHTML = currentMockQuestion.answer;
+      document.getElementById('sim-tags').innerHTML = currentMockQuestion.tags.map(t => `
+        <span class="px-2 py-0.5 rounded bg-slate-800 text-indigo-300 border border-slate-700 text-xs font-mono">
+          ${t}
+        </span>
+      `).join('');
+
+      // Hide answer initially
+      hideSimAnswer();
+      resetSimTimer();
+      startSimTimer();
+      showToast('New panel question drawn! 3-minute timer started.', '⏱️');
+    }
+
+    function toggleSimAnswer() {
+      const box = document.getElementById('sim-answer-box');
+      const text = document.getElementById('sim-answer-text');
+      const icon = document.getElementById('sim-answer-icon');
+
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        text.innerText = 'Hide Model Answer';
+        icon.innerText = '🙈';
+      } else {
+        box.classList.add('hidden');
+        text.innerText = 'Reveal Model Answer & Key Evaluation Points';
+        icon.innerText = '👁️';
+      }
+    }
+
+    function hideSimAnswer() {
+      const box = document.getElementById('sim-answer-box');
+      box.classList.add('hidden');
+      document.getElementById('sim-answer-text').innerText = 'Reveal Model Answer & Key Evaluation Points';
+      document.getElementById('sim-answer-icon').innerText = '👁️';
+    }
+
+    function toggleSimTimer() {
+      if (isTimerRunning) {
+        pauseSimTimer();
+      } else {
+        startSimTimer();
+      }
+    }
+
+    function startSimTimer() {
+      if (isTimerRunning) return;
+      isTimerRunning = true;
+      document.getElementById('sim-timer-btn').innerText = 'Pause';
+      document.getElementById('sim-timer-btn').classList.replace('bg-blue-600', 'bg-amber-600');
+      document.getElementById('sim-timer-btn').classList.replace('hover:bg-blue-500', 'hover:bg-amber-500');
+
+      simTimerInterval = setInterval(() => {
+        if (simSecondsRemaining > 0) {
+          simSecondsRemaining--;
+          updateTimerDisplay();
+        } else {
+          pauseSimTimer();
+          showToast('Time is up for this interview question!', '🔔');
+        }
+      }, 1000);
+    }
+
+    function pauseSimTimer() {
+      isTimerRunning = false;
+      clearInterval(simTimerInterval);
+      document.getElementById('sim-timer-btn').innerText = 'Resume';
+      document.getElementById('sim-timer-btn').classList.replace('bg-amber-600', 'bg-blue-600');
+      document.getElementById('sim-timer-btn').classList.replace('hover:bg-amber-500', 'hover:bg-blue-500');
+    }
+
+    function resetSimTimer() {
+      pauseSimTimer();
+      simSecondsRemaining = 180;
+      updateTimerDisplay();
+      document.getElementById('sim-timer-btn').innerText = 'Start Timer';
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(simSecondsRemaining / 60);
+      const secs = simSecondsRemaining % 60;
+      document.getElementById('sim-timer').innerText = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    /* =====================================================================
+       Mode Switching & Keyboard Navigation
+       ===================================================================== */
+    function setMode(mode) {
+      currentMode = mode;
+      const views = ['flashcards', 'revision', 'simulator'];
+      views.forEach(v => {
+        const tabBtn = document.getElementById(`tab-${v}`);
+        const viewEl = document.getElementById(`view-${v}`);
+        if (v === mode) {
+          viewEl.classList.remove('hidden');
+          tabBtn.className = "px-4 py-2 rounded-lg transition-all flex items-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-600/30";
+        } else {
+          viewEl.classList.add('hidden');
+          tabBtn.className = "px-4 py-2 rounded-lg text-slate-400 hover:text-slate-200 transition-all flex items-center gap-2";
+        }
+      });
+
+      if (mode === 'simulator' && !currentMockQuestion) {
+        generateRandomMockQuestion();
+      }
+    }
+
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        // Ignore if user is currently typing in the search box
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (currentMode === 'flashcards') {
+          if (e.code === 'Space') {
+            e.preventDefault();
+            flipCard();
+          } else if (e.code === 'ArrowRight') {
+            e.preventDefault();
+            nextCard();
+          } else if (e.code === 'ArrowLeft') {
+            e.preventDefault();
+            prevCard();
+          } else if (e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            markCard(true);
+          } else if (e.key.toLowerCase() === 'r') {
+            e.preventDefault();
+            markCard(false);
+          }
+        }
+      });
+    }
+
+    function showToast(msg, icon = 'ℹ️') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      document.getElementById('toast-icon').innerText = icon;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2400);
+    }
+  </script>
+</body>
+</html>
